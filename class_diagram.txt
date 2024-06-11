@@ -1,0 +1,45 @@
+@startuml
+class Resource {
+- nom 
+- quantite 
+}
+
+class Building { 
+- habitants 
+- travailleurs 
+- cout 
+- type 
+
+}
+
+class Manager { 
+
+
+}
+
+abstract class People {
+- int id 
+- logement 
+ 
+}
+
+class Resident  { 
+public boolean worker 
+
+}
+
+class Worker { 
+
+}
+
+class UI {
+
+
+}
+
+
+People <|-- Resident 
+People <|-- Worker  
+Resource -o Building 
+'commentaire 
+@enduml
