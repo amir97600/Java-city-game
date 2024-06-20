@@ -27,14 +27,16 @@ public class Manager {
         int time = 0; 
 
         displayResources(RessourceMaterielle); 
-        while(true){
+        startloop: while(true){
             System.out.println("##################City Game##################");
             System.out.println("Que voulez vous faire ? ");
             System.out.println("0\tLire les règles");
             System.out.println("1\tAjouter un batiment");
             System.out.println("2\tRetirer un batiment");
             System.out.println("3\tAjouter des personnes dans un batiment");
-            System.out.println("4\tRetirer un batiment");
+            System.out.println("4\tRetirer des personnes dans un batiment");
+            System.out.println("5\tRevenir au menu précédent");
+
             int input = saisie_int(); 
 
             switch(input){
@@ -42,7 +44,8 @@ public class Manager {
                 case 1: addBuilding(time,Batiments,RessourceMaterielle);break; 
                 case 2: removeBuilding(Batiments);break; 
                 case 3: addPeople(Batiments);break; 
-                case 4: removePeople(Batiments);break; 
+                case 4: removePeople(Batiments);break;
+                case 5: break startloop; 
                 default: System.out.println("\nEntrez une option valide\n\n");break;
             } 
 
@@ -318,7 +321,11 @@ public class Manager {
     public void addPeople(Vector<Building> Batiments){
         System.out.println("Veuillez saisir le nom du batiment a sélectionner"); 
         String nom = saisie_string(); 
-        Building item = FindBuilding(nom,Batiments); // récupération du building
+        Building item;
+
+        try {
+            
+            item = FindBuilding(nom,Batiments); // récupération du building
 
         System.out.println ("Capacité du batiment : " + item.printResident() + "/" + item.getNbHabitants() + " habitants "  + item.printWorker() + "/" + item.getNbTravailleurs() + " travailleurs"  ); 
         System.out.println("1\t Ajouter un  habitant "); 
@@ -345,42 +352,58 @@ public class Manager {
  
  
         } 
+
+            }
+
+         catch (Exception e) {
+            // TODO: handle exception
+        }
+        
         
     } 
 
     public void removePeople(Vector<Building> Batiments){
-        System.out.println("Veuillez saisir le nom du batiment a sélectionner"); 
+        System.out.println("Veuillez saisir le nom du batiment dans lequel vous voulez enlever l'habitant"); 
         String nom = saisie_string(); 
-        Building item = FindBuilding(nom,Batiments); // récupération du building
+        Building item;
+        try {
+            item = FindBuilding(nom,Batiments); // récupération du building
 
-        System.out.println ("Capacité du batiment : " + item.printResident() + "/" + item.getNbHabitants() + " habitants "  + item.printWorker() + "/" + item.getNbTravailleurs() + " travailleurs"  ); 
-        System.out.println("1\t Retirer un  habitant "); 
-        System.out.println("2\t Retirer un travailleur "); 
-        int choice = saisie_int(); 
-
-        System.out.println("Combien voulez vous en retirer du building ? "); 
-        int nb = saisie_int();
-        
-        switch(choice){
-            case 1: 
-            Vector<Resident> hab = item.getHabitants(); 
-            for (int i = 0; i<nb; i++){
-                
-                hab.remove(i); 
-                System.out.println("habitant(s) retiré(s) avec succès "); 
-            } 
-            case 2: 
-            Vector<Worker> wor = item.gettravailleur(); 
+            System.out.println ("Capacité du batiment : " + item.printResident() + "/" + item.getNbHabitants() + " habitants "  + item.printWorker() + "/" + item.getNbTravailleurs() + " travailleurs"  ); 
+            System.out.println("1\t Retirer un  habitant "); 
+            System.out.println("2\t Retirer un travailleur "); 
+            int choice = saisie_int(); 
+    
+            System.out.println("Combien voulez vous en retirer du building ? "); 
+            int nb = saisie_int();
             
-            for (int i = 0; i<nb; i++){
-                 
-                wor.remove(i); 
-                System.out.println("travailleur(s) retiré(s) avec succès "); 
-            }
-            default: System.out.println("\nEntrez une option valide\n\n");break;
- 
- 
-        } 
+            switch(choice){
+                case 1: 
+                Vector<Resident> hab = item.getHabitants(); 
+                for (int i = 0; i<nb; i++){
+                    
+                    hab.remove(i); 
+                    System.out.println("habitant(s) retiré(s) avec succès "); 
+                } 
+                case 2: 
+                Vector<Worker> wor = item.gettravailleur(); 
+                
+                for (int i = 0; i<nb; i++){
+                     
+                    wor.remove(i); 
+                    System.out.println("travailleur(s) retiré(s) avec succès "); 
+                }
+                default: System.out.println("\nEntrez une option valide\n\n");break;
+     
+     
+            } 
+
+        } catch (Exception e) {
+            
+        }
+        
+
+       
         
     } 
 
